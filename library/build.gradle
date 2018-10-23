@@ -1,4 +1,17 @@
+plugins {
+    id "com.jfrog.bintray" version "1.8.4"
+}
+
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'maven-publish'
+apply plugin: 'org.jetbrains.dokka'
+
+final String GROUP_ID     = "space.schrws.cherrypicker"
+final String VERSION      = "1.0.0"
+final String DESCRIPTION  = "Android DateTime Picker Library"
+final String GITHUB_URL   = "https://github.com/Schrws/CherryPicker"
 
 android {
     compileSdkVersion 27
@@ -7,7 +20,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 27
         versionCode 1
-        versionName "1.0"
+        versionName VERSION
     }
 
     buildTypes {
@@ -23,3 +36,85 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:27.1.1'
 }
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+task javadocJar(type: Jar) {
+    classifier = 'javadoc'
+    from "$buildDir/javadoc"
+}
+
+dokka {
+    outputFormat = 'javadoc'
+    outputDirectory = "$buildDir/javadoc"
+}
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+bintray {
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.key")
+
+    publications = ['CherryPicker']
+
+    pkg {
+        repo            = 'maven'
+        name            = 'CherryPicker'
+        desc            = DESCRIPTION
+        vcsUrl          = GITHUB_URL + '.git'
+        websiteUrl      = GITHUB_URL
+        issueTrackerUrl = GITHUB_URL + '/issues'
+        licenses        = ['MIT']
+        publish         = true
+
+        version {
+            name     = VERSION
+            desc     = DESCRIPTION
+            vcsTag   = VERSION
+            released = new Date()
+        }
+    }
+}
+
+def pomConfig = {
+    licenses {
+        license {
+            name "MIT License"
+            url "https://opensource.org/licenses/MIT"
+            distribution "repo"
+        }
+    }
+}
+
+publishing {
+    publications {
+        CherryPicker(MavenPublication) {
+            groupId GROUP_ID
+            version VERSION
+            artifactId 'cherrypicker'
+
+            artifact sourcesJar
+            artifact javadocJar
+
+            artifact("$buildDir/outputs/aar/${project.getName()}-release.aar")
+
+            pom.withXml {
+                def root = asNode()
+                root.appendNode('description', DESCRIPTION)
+                root.appendNode('name', 'cherrypicker')
+                root.appendNode('url', GITHUB_URL)
+                root.children().last() + pomConfig
+            }
+        }
+    }
+}
+
+bintrayUpload.dependsOn 'sourcesJar'
+bintrayUpload.dependsOn 'javadocJar'
+bintrayUpload.dependsOn 'generatePomFileForCherryPickerPublication'
+bintrayUpload.dependsOn 'dokka'
+bintrayUpload.dependsOn 'assembleRelease'
