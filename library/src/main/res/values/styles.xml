@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="TextAppearance">
+        <item name="textColor">?textColor</item>
+        <item name="textColorHighlight">?textColorHighlight</item>
+        <item name="textColorHint">?textColorHint</item>
+        <item name="textColorLink">?textColorLink</item>
+        <item name="textSize">16sp</item>
+        <item name="textStyle">normal</item>
+    </style>
+    <style name="TextAppearance.Material">
+        <item name="textColor">?attr/textColor</item>
+        <item name="textColorHint">?attr/textColorHint</item>
+        <item name="textColorHighlight">?attr/textColorHighlight</item>
+        <item name="textColorLink">?attr/textColorLink</item>
+        <item name="textSize">@dimen/text_size_body_1_material</item>
+    </style>
+    <style name="TextAppearance.Material.Body2">
+        <item name="textSize">@dimen/text_size_body_2_material</item>
+        <item name="fontFamily">sans-serif</item>
+        <item name="textColor">?attr/textColor</item>
+    </style>
+    <style name="TextAppearance.Material.Caption">
+        <item name="textSize">@dimen/text_size_caption_material</item>
+        <item name="fontFamily">sans-serif</item>
+        <item name="textColor">?attr/textColor</item>
+    </style>
+    <style name="TextAppearance.Material.Widget.Calendar.Day" parent="TextAppearance.Material.Caption">
+        <item name="textColor">?attr/textColor</item>
+    </style>
+    <style name="TextAppearance.Material.Widget.Calendar.DayOfWeek" parent="TextAppearance.Material.Caption" />
+    <style name="TextAppearance.Material.Widget.Calendar.Month" parent="TextAppearance.Material.Body2" />
+    <style name="TextAppearance.Material.DatePicker.YearLabel" parent="TextAppearance.Material">
+        <item name="textColor">@color/test</item>
+        <item name="textSize">@dimen/date_picker_year_label_size</item>
+        <item name="fontFamily">sans-serif-medium</item>
+    </style>
+    <style name="TextAppearance.Material.DatePicker.DateLabel" parent="TextAppearance.Material">
+        <item name="textColor">#ae12ae</item>
+        <item name="textSize">@dimen/date_picker_date_label_size</item>
+        <item name="fontFamily">sans-serif-medium</item>
+    </style>
+    <style name="TextAppearance.Material.DatePicker.List.YearLabel" parent="TextAppearance.Material">
+        <item name="textColor">?attr/textColor</item>
+        <item name="textSize">@dimen/datepicker_list_year_label_size</item>
+        <item name="fontFamily">sans-serif</item>
+    </style>
+    <style name="TextAppearance.Material.DatePicker.List.YearLabel.Activated">
+        <item name="textColor">?attr/colorControlActivated</item>
+        <item name="textSize">@dimen/datepicker_list_year_activated_label_size</item>
+        <item name="fontFamily">sans-serif-medium</item>
+    </style>
+</resources>
