@@ -6,8 +6,10 @@ import android.os.Build;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.View;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.function.Predicate;
 
 /**
  * Created by Schrws on 2018-10-28.
@@ -21,8 +23,12 @@ public class DayPickerViewPager extends ViewPager {
         super(context, attrs);
     }
 
+    private Method mPopulate = null;
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        populate();
+
         // Everything below is mostly copied from FrameLayout.
         int count = getChildCount();
         final boolean measureMatchParentChildren =
@@ -93,5 +99,20 @@ public class DayPickerViewPager extends ViewPager {
             }
         }
         mMatchParentChildren.clear();
+    }
+
+    private void populate() {
+        if (mPopulate == null) {
+            try {
+                mPopulate = ViewPager.class.getDeclaredMethod("populate", (Class[]) null);
+                mPopulate.setAccessible(true);
+            } catch (NoSuchMethodException ignored) {}
+        }
+
+        if (mPopulate != null) {
+            try {
+                mPopulate.invoke(this);
+            } catch (IllegalAccessException | InvocationTargetException ignored) { }
+        }
     }
 }

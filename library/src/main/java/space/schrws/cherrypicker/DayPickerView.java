@@ -53,7 +53,7 @@ public class DayPickerView extends ViewGroup {
                 Context.ACCESSIBILITY_SERVICE);
         final TypedArray a = context.obtainStyledAttributes(attrs,
                 R.styleable.CherryCalendarView, defStyleAttr, defStyleRes);
-        final int firstDayOfWeek = a.getInt(R.styleable.CherryDatePicker_firstDayOfWeek, 1);
+        final int firstDayOfWeek = 1;
         final String minDate = a.getString(R.styleable.CherryCalendarView_minDate);
         final String maxDate = a.getString(R.styleable.CherryCalendarView_maxDate);
         final int monthTextAppearanceResId = a.getResourceId(
@@ -91,16 +91,16 @@ public class DayPickerView extends ViewGroup {
         mViewPager.setAdapter(mAdapter);
         mViewPager.setOnPageChangeListener(mOnPageChangedListener);
         // Proxy the month text color into the previous and next buttons.
-//        if (monthTextAppearanceResId != 0) {
-//            final TypedArray ta = context.obtainStyledAttributes(null,
-//                    ATTRS_TEXT_COLOR, 0, monthTextAppearanceResId);
-//            final ColorStateList monthColor = ta.getColorStateList(0);
-//            if (monthColor != null) {
-//                mPrevButton.setImageTintList(monthColor);
-//                mNextButton.setImageTintList(monthColor);
-//            }
-//            ta.recycle();
-//        }
+        if (monthTextAppearanceResId != 0) {
+            final TypedArray ta = getContext().obtainStyledAttributes(null,
+                    ATTRS_TEXT_COLOR, 0, monthTextAppearanceResId);
+            final ColorStateList monthColor = ta.getColorStateList(0);
+            if (monthColor != null) {
+                mPrevButton.setImageTintList(monthColor);
+                mNextButton.setImageTintList(monthColor);
+            }
+            ta.recycle();
+        }
         // Set up min and max dates.
         final Calendar tempDate = Calendar.getInstance();
         if (!Utils.parseDate(minDate, tempDate)) {
@@ -168,10 +168,9 @@ public class DayPickerView extends ViewGroup {
         }
         final int width = right - left;
         final int height = bottom - top;
-        mViewPager.layout(0, 0, width, height);
         mAdapter.notifyDataSetChanged();
+        mViewPager.layout(0, 0, width, height);
         final SimpleMonthView monthView = (SimpleMonthView) mViewPager.getChildAt(0);
-        Log.e("asd", mViewPager.getChildCount() + "");
         final int monthHeight = monthView.getMonthHeight();
         final int cellWidth = monthView.getCellWidth();
         // Vertically center the previous/next buttons within the month

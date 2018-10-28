@@ -29,7 +29,7 @@
         <item name="textColor">?attr/textColor</item>
     </style>
     <style name="TextAppearance.Material.Widget.Calendar.DayOfWeek" parent="TextAppearance.Material.Caption" />
-    <style name="TextAppearance.Material.Widget.Calendar.Month" parent="TextAppearance.Material.Body2" />
+    <style name="TextAppearance.Material.Widget.Calendar.Month" parent="TextAppearance.AppCompat.Body2" />
     <style name="TextAppearance.Material.DatePicker.YearLabel" parent="TextAppearance.Material">
         <item name="textColor">@color/test</item>
         <item name="textSize">@dimen/date_picker_year_label_size</item>
